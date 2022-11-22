@@ -37,23 +37,27 @@ def show_result(img_path, result, index):
         y1=face.top()
         x2=face.right()
         y2=face.bottom()
+        cv2.rectangle(img, (x1,y1), (x2,y2), color=green, thickness=4)        
+
         if(result>0.7):
             cv2.rectangle(img, (x1,y1), (x2,y2), color=green, thickness=4)
             cv2.rectangle(img, (x1, y2-35), (x2, y2), color=green, thickness=-1)
+            puttext(img=img, result="correct:"+str(result), pos=(x1+6, y2-6), color=white)
+
         else:
             cv2.rectangle(img, (x1,y1), (x2,y2), color=red, thickness=4)
             cv2.rectangle(img, (x1, y2-35), (x2, y2), color=red, thickness=-1)
+            puttext(img=img, result="fault:"+str(result),pos=(x1+6, y2-6), color=white)
 
+    # if(result>0.7):
+    #     print("correct")
+    #     puttext(img=img, result="correct:"+str(result), pos=(x1+6, y2-6), color=white)
 
-    if(result>0.7):
-        print("correct")
-        puttext(img=img, result="correct:"+str(result), pos=(x1+6, y2-6), color=white)
+    # else:
+    #     print("fault")
+    #     puttext(img=img, result="fault:"+str(result),pos=(x1+6, y2-6), color=white)
 
-    else:
-        print("fault")
-        puttext(img=img, result="fault:"+str(result),pos=(x1+6, y2-6), color=white)
-
-    cv2.imwrite("./images/result/"+str(index)+".png", img)
-    cv2.imshow("image",img)
+    cv2.imwrite("./images/result_mask/"+str(index)+".png", img)
+    cv2.imshow(str(index)+".png",img)
     cv2.waitKey(0)
 
